@@ -1,4 +1,4 @@
-Challenge Quiz
+😎Challenge Quiz
 Welcome to Challenge Quiz – an engaging, interactive web-based quiz application designed to test your knowledge of JavaScript, Data Structures, Algorithms, and System Design! Whether you're a beginner brushing up on basics or an advanced learner diving into complex concepts, this quiz has something for everyone.
 
  (Replace with a live demo link if hosted)
@@ -15,16 +15,21 @@ Responsive Design: Works seamlessly on desktop, tablet, and mobile devices.
 Randomized Questions: Questions are shuffled on each attempt for variety.
 Restart Option: Reset and retake the quiz as many times as you’d like.
 Score Summary: See your final score with a percentage at the end.
+
+
 🛠️ Tech Stack
 HTML5: Structure and layout of the quiz.
 CSS3: Styling with a modern gradient background, hover effects, and responsive design using media queries.
 JavaScript (ES6): Core logic for quiz functionality, including timers, event handling, and DOM manipulation.
 Google Fonts: Poppins font for a clean, professional look.
+
 External Audio: Beep sounds for correct, incorrect, and time-up feedback.
 📚 Key Concepts Demonstrated
+
 This project showcases several programming and design concepts:
 
 JavaScript
+==========
 DOM Manipulation: Dynamically creates and updates quiz elements like questions, options, and progress bars.
 Event Handling: Listeners for option clicks and restart button functionality.
 Closures: Used implicitly in timer intervals and event callbacks.
@@ -53,12 +58,15 @@ git clone https://github.com/devononymous/ChallengeQuiz.git
 cd challenge-quiz
 Open the Project:
 Simply open index.html in a web browser (e.g., Chrome, Firefox).
+
 No server or dependencies required!
+
 Take the Quiz:
 Start answering questions within 15 seconds each.
 Click an option to submit your answer.
 Watch the progress bar fill up as you go.
 See your score at the end and restart if you’d like!
+
 Customize (Optional):
 Add new questions to the quizData array in the <script> section.
 Adjust the TIME_LIMIT constant to change the timer duration.
@@ -74,6 +82,7 @@ DSA: "What is the time complexity of searching in a balanced BST?"
 Answer: O(log n)
 System Design: "What are the benefits of using a CDN?"
 Answer: Reduced server load, faster content delivery...
+
 💡 Why Use Challenge Quiz?
 Learning Tool: Reinforce your understanding of key programming concepts.
 Interview Prep: Practice topics commonly asked in technical interviews.
@@ -87,6 +96,7 @@ Categories: Add filters to select specific topics (e.g., only DSA questions).
 Difficulty Levels: Introduce easy, medium, and hard modes.
 Backend Integration: Connect to a server to fetch questions dynamically.
 Visual Enhancements: Add animations for question transitions or confetti for high scores.
+
 📖 How It Works
 Initialization: The initializeQuiz() function sets up the DOM elements and shuffles the quizData.
 Question Loading: loadQuestion() displays the current question and options, starting the timer.
@@ -101,9 +111,9 @@ Feel free to fork this project, submit pull requests, or suggest improvements! O
 April 9, 2025
 
 👨‍💻 Created By
-Sushil
+Devononymous
 
-(Add your GitHub, LinkedIn, or portfolio link here)
-
+https://github.com/devononymous 
+https://www.linkedin.com/in/sushil-kumar-mahato/
 
 Enjoy the quiz, and happy coding! 🚀
