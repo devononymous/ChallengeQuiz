@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Questions for Success</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+                * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                }
+
+                body {
+                        font-family: 'Poppins', sans-serif;
+                        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+                        min-height: 100vh;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 20px;
+                }
+
+                .quiz-container {
+                        background: #ffffff;
+                        border-radius: 20px;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                        padding: 30px;
+                        max-width: 700px;
+                        width: 100%;
+                        text-align: center;
+                }
+
+                h1 {
+                        font-size: 2em;
+                        color: #2c3e50;
+                        margin-bottom: 20px;
+                        font-weight: 600;
+                }
+
+                .question {
+                        font-size: 1.4em;
+                        color: #34495e;
+                        margin: 20px 0;
+                        line-height: 1.4;
+                }
+
+                .options {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                }
+
+                .option {
+                        background: #ecf0f1;
+                        padding: 15px;
+                        border-radius: 10px;
+                        border: 2px solid #dfe6e9;
+                        font-size: 1.1em;
+                        color: #2c3e50;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                }
+
+                .option:hover {
+                        background: #dfe6e9;
+                        transform: translateY(-2px);
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .correct {
+                        background: #27ae60;
+                        color: #fff;
+                        border-color: #219653;
+                }
+
+                .incorrect {
+                        background: #e74c3c;
+                        color: #fff;
+                        border-color: #c0392b;
+                }
+
+                .progress-bar {
+                        height: 10px;
+                        background: #dfe6e9;
+                        border-radius: 5px;
+                        margin: 25px 0;
+                        overflow: hidden;
+                }
+
+                .progress {
+                        height: 100%;
+                        background: linear-gradient(90deg, #3498db, #2980b9);
+                        width: 0;
+                        transition: width 0.5s ease;
+                }
+
+                #timer {
+                        font-size: 1.2em;
+                        color: #e74c3c;
+                        margin: 15px 0;
+                        font-weight: 600;
+                }
+
+                #result {
+                        font-size: 1.5em;
+                        color: #2c3e50;
+                        margin: 20px 0;
+                }
+
+                #restartBtn {
+                        background: #3498db;
+                        color: #fff;
+                        padding: 12px 25px;
+                        border: none;
+                        border-radius: 25px;
+                        font-size: 1.1em;
+                        cursor: pointer;
+                        transition: background 0.3s ease;
+                }
+
+                #restartBtn:hover {
+                        background: #2980b9;
+                }
+
+                .hidden {
+                        display: none;
+                }
+
+                @media (max-width: 600px) {
+                        .quiz-container {
+                                padding: 20px;
+                        }
+
+                        .question {
+                                font-size: 1.2em;
+                        }
+
+                        .option {
+                                font-size: 1em;
+                                padding: 12px;
+                        }
+                }
+        </style>
+</head>
+
+<body>
+        <div id="quizContainer" class="quiz-container">
+                <h1>Challenge Quiz</h1>
+        </div>
+        <script>
+                let quizData = [
+                        // Basic JavaScript
+                        { question: "What does DOM stand for?", options: ["Document Object Model", "Data Object Module", "Dynamic Output Method", "Document Order Matrix"], correctAnswer: "Document Object Model" },
+                        { question: "Which method selects an element by ID?", options: ["querySelector()", "getElementById()", "getElementsByClassName()", "selectById()"], correctAnswer: "getElementById()" },
+                        { question: "What keyword declares a variable in ES6?", options: ["var", "let", "const", "variable"], correctAnswer: "let" },
+                        // Advanced JavaScript Concepts
+                        { question: "Explain the concept of Closures in JavaScript with an example.", options: ["A way to define private variables.", "A function that has access to its outer function's scope even after the outer function has finished executing.", "A method for handling asynchronous operations.", "A mechanism for inheritance."], correctAnswer: "A function that has access to its outer function's scope even after the outer function has finished executing." },
+                        { question: "What is the difference between `==` and `===` in JavaScript?", options: ["They are the same.", "`==` compares value and type, `===` compares only value.", "`===` compares value and type, `==` compares only value with type coercion.", "`===` is used for assignment, `==` for comparison."], correctAnswer: "`===` compares value and type, `==` compares only value with type coercion." },
+                        { question: "Explain the concept of the Event Loop in JavaScript.", options: ["It's a loop that continuously checks for new events.", "It's a mechanism that allows JavaScript to perform non-blocking asynchronous operations.", "It's a feature for handling errors in event listeners.", "It's a way to define custom events."], correctAnswer: "It's a mechanism that allows JavaScript to perform non-blocking asynchronous operations." },
+                        { question: "What are Promises in JavaScript and how do they handle asynchronous operations?", options: ["They are a way to define synchronous functions.", "They represent the eventual completion (or failure) of an asynchronous operation and allow you to chain actions.", "They are used for iterating over arrays.", "They are a new syntax for defining classes."], correctAnswer: "They represent the eventual completion (or failure) of an asynchronous operation and allow you to chain actions." },
+                        { question: "What are Higher-Order Functions in JavaScript? Provide an example.", options: ["Functions that operate on multiple arguments.", "Functions that can be assigned to variables.", "Functions that either accept other functions as arguments or return a function.", "Functions that are defined using arrow syntax."], correctAnswer: "Functions that either accept other functions as arguments or return a function." },
+                        { question: "Explain the concept of Prototypal Inheritance in JavaScript.", options: ["A way to achieve inheritance using classes.", "An object can inherit properties and methods from another object via its prototype chain.", "A mechanism for creating private members in objects.", "A method for handling events in a hierarchical manner."], correctAnswer: "An object can inherit properties and methods from another object via its prototype chain." },
+                        { question: "What are Web Workers and when might you use them?", options: ["They are used for styling web pages.", "They allow you to run JavaScript code in the background, independent of the main thread, preventing UI blocking.", "They are used for handling server-side logic.", "They are a new feature for creating animations."], correctAnswer: "They allow you to run JavaScript code in the background, independent of the main thread, preventing UI blocking." },
+                        // Data Structures and Algorithms (DSA)
+                        { question: "What is the time complexity of searching for an element in a balanced Binary Search Tree in the worst case?", options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"], correctAnswer: "O(log n)" },
+                        { question: "Explain the difference between a Stack and a Queue data structure.", options: ["Stacks use FIFO, Queues use LIFO.", "Stacks use LIFO, Queues use FIFO.", "Stacks allow insertion and deletion at both ends, Queues only at one end.", "Queues are used for sorting, Stacks for searching."], correctAnswer: "Stacks use LIFO, Queues use FIFO." },
+                        { question: "When would you choose to use a Hash Table over a regular array for storing and retrieving data?", options: ["When the order of elements matters.", "When you need to store a fixed number of elements.", "When you need average O(1) time complexity for insertion, deletion, and search based on a key.", "When you need to iterate through elements in a sorted order."], correctAnswer: "When you need average O(1) time complexity for insertion, deletion, and search based on a key." },
+                        { question: "Describe a common use case for a Graph data structure.", options: ["Storing a list of items.", "Representing hierarchical relationships.", "Modeling networks like social connections or road systems.", "Implementing a last-in, first-out data storage."], correctAnswer: "Modeling networks like social connections or road systems." },
+                        { question: "What is the purpose of Breadth-First Search (BFS) and Depth-First Search (DFS) algorithms for traversing a graph or tree?", options: ["They are sorting algorithms.", "They are used for finding the shortest path in all cases.", "BFS explores level by level, while DFS explores as far as possible along each branch.", "DFS is always more efficient than BFS."], correctAnswer: "BFS explores level by level, while DFS explores as far as possible along each branch." },
+                        // System Design
+                        { question: "What are the key considerations when designing a scalable web application?", options: ["Using the latest JavaScript framework.", "Focusing solely on front-end performance.", "Database choice, caching strategies, load balancing, and microservices architecture.", "Avoiding third-party libraries."], correctAnswer: "Database choice, caching strategies, load balancing, and microservices architecture." },
+                        { question: "Explain the concept of Load Balancing and why it's important in a distributed system.", options: ["It's a way to optimize database queries.", "It distributes incoming traffic across multiple servers to prevent any single server from being overwhelmed, improving performance and availability.", "It's a method for compressing data.", "It's a security mechanism to prevent unauthorized access."], correctAnswer: "It distributes incoming traffic across multiple servers to prevent any single server from being overwhelmed, improving performance and availability." },
+                        { question: "What are the benefits of using a Content Delivery Network (CDN)?", options: ["Improved database performance.", "Reduced server load, faster content delivery to users geographically closer to CDN nodes.", "Enhanced security against all types of attacks.", "Simplified server-side development."], correctAnswer: "Reduced server load, faster content delivery to users geographically closer to CDN nodes." },
+                        { question: "Describe the differences between Horizontal and Vertical scaling.", options: ["Horizontal scaling involves adding more resources to a single machine, while vertical scaling involves adding more machines.", "Vertical scaling involves adding more resources to a single machine, while horizontal scaling involves adding more machines.", "Horizontal scaling is always cheaper than vertical scaling.", "Vertical scaling is only applicable to databases."], correctAnswer: "Vertical scaling involves adding more resources to a single machine, while horizontal scaling involves adding more machines." },
+                        { question: "What are some common caching strategies used in web applications?", options: ["Only client-side caching.", "Only server-side caching.", "Browser caching, server-side caching (e.g., Redis, Memcached), and CDN caching.", "Avoiding caching altogether for real-time data."], correctAnswer: "Browser caching, server-side caching (e.g., Redis, Memcached), and CDN caching." },
+                ];
+
+                let currentQuestionIndex = 0;
+                let score = 0;
+                let timerInterval;
+                const TIME_LIMIT = 15;
+                let timeLeft = TIME_LIMIT;
+
+                const correctSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
+                const incorrectSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3");
+                const timeUpSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-03.mp3");
+
+                const quizContainer = document.getElementById("quizContainer");
+
+                function shuffleArray(array) {
+                        for (let i = array.length - 1; i > 0; i--) {
+                                const j = Math.floor(Math.random() * (i + 1));
+                                [array[i], array[j]] = [array[j], array[i]];
+                        }
+                        return array;
+                }
+
+                function initializeQuiz() {
+                        quizData = shuffleArray(quizData);
+
+                        const progressBar = document.createElement("div");
+                        progressBar.classList.add("progress-bar");
+                        const progress = document.createElement("div");
+                        progress.classList.add("progress");
+                        progressBar.appendChild(progress);
+                        quizContainer.appendChild(progressBar);
+
+                        const timerEl = document.createElement("div");
+                        timerEl.id = "timer";
+                        timerEl.textContent = `Time Left: ${timeLeft}s`;
+                        quizContainer.appendChild(timerEl);
+
+                        const questionEl = document.createElement("div");
+                        questionEl.classList.add("question");
+                        const optionsEl = document.createElement("div");
+                        optionsEl.classList.add("options");
+                        quizContainer.appendChild(questionEl);
+                        quizContainer.appendChild(optionsEl);
+
+                        const resultEl = document.createElement("div");
+                        resultEl.id = "result";
+                        resultEl.classList.add("hidden");
+                        const restartBtn = document.createElement("button");
+                        restartBtn.textContent = "Restart Quiz";
+                        restartBtn.classList.add("hidden");
+                        restartBtn.id = "restartBtn";
+                        quizContainer.appendChild(resultEl);
+                        quizContainer.appendChild(restartBtn);
+
+                        loadQuestion();
+                }
+
+                function startTimer() {
+                        timeLeft = TIME_LIMIT;
+                        const timerEl = document.getElementById("timer");
+                        timerEl.textContent = `Time Left: ${timeLeft}s`;
+
+                        clearInterval(timerInterval);
+                        timerInterval = setInterval(() => {
+                                timeLeft--;
+                                timerEl.textContent = `Time Left: ${timeLeft}s`;
+                                if (timeLeft <= 0) {
+                                        clearInterval(timerInterval);
+                                        timeUpSound.play();
+                                        revealAnswer();
+                                }
+                        }, 1000);
+                }
+
+                function loadQuestion() {
+                        const questionEl = document.querySelector(".question");
+                        const optionsEl = document.querySelector(".options");
+                        const currentQuestion = quizData[currentQuestionIndex];
+
+                        questionEl.textContent = `Q${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+                        optionsEl.innerHTML = "";
+
+                        currentQuestion.options.forEach((option) => {
+                                const optionEl = document.createElement("div");
+                                optionEl.classList.add("option");
+                                optionEl.textContent = option;
+                                optionEl.addEventListener("click", () => handleAnswer(option));
+                                optionsEl.appendChild(optionEl);
+                        });
+
+                        updateProgress();
+                        startTimer();
+                }
+
+                function revealAnswer() {
+                        const currentQuestion = quizData[currentQuestionIndex];
+                        const options = document.querySelectorAll(".option");
+
+                        options.forEach((optionEl) => {
+                                optionEl.style.pointerEvents = "none";
+                                if (optionEl.textContent === currentQuestion.correctAnswer) {
+                                        optionEl.classList.add("correct");
+                                }
+                        });
+
+                        setTimeout(() => {
+                                currentQuestionIndex++;
+                                if (currentQuestionIndex < quizData.length) {
+                                        loadQuestion();
+                                } else {
+                                        showResult();
+                                }
+                        }, 1000);
+                }
+
+                function handleAnswer(selectedOption) {
+                        clearInterval(timerInterval);
+                        const currentQuestion = quizData[currentQuestionIndex];
+                        const options = document.querySelectorAll(".option");
+
+                        options.forEach((optionEl) => {
+                                optionEl.style.pointerEvents = "none";
+                                if (optionEl.textContent === currentQuestion.correctAnswer) {
+                                        optionEl.classList.add("correct");
+                                }
+                                if (optionEl.textContent === selectedOption) {
+                                        if (selectedOption === currentQuestion.correctAnswer) {
+                                                score++;
+                                                correctSound.play();
+                                        } else {
+                                                optionEl.classList.add("incorrect");
+                                                incorrectSound.play();
+                                        }
+                                }
+                        });
+
+                        setTimeout(() => {
+                                currentQuestionIndex++;
+                                if (currentQuestionIndex < quizData.length) {
+                                        loadQuestion();
+                                } else {
+                                        showResult();
+                                }
+                        }, 1000);
+                }
+
+                function updateProgress() {
+                        const progress = document.querySelector(".progress");
+                        const percentage = ((currentQuestionIndex + 1) / quizData.length) * 100;
+                        progress.style.width = `${percentage}%`;
+                }
+
+                function showResult() {
+                        clearInterval(timerInterval);
+                        const questionEl = document.querySelector(".question");
+                        const optionsEl = document.querySelector(".options");
+                        const resultEl = document.getElementById("result");
+                        const restartBtn = document.getElementById("restartBtn");
+                        const timerEl = document.getElementById("timer");
+
+                        questionEl.classList.add("hidden");
+                        optionsEl.classList.add("hidden");
+                        timerEl.classList.add("hidden");
+                        resultEl.classList.remove("hidden");
+                        restartBtn.classList.remove("hidden");
+
+                        resultEl.textContent = `Challenge Quiz Complete! Your Score: ${score}/${quizData.length} (${(score / quizData.length) * 100}%)`;
+                        restartBtn.addEventListener("click", resetQuiz);
+                }
+
+                function resetQuiz() {
+                        currentQuestionIndex = 0;
+                        score = 0;
+                        quizContainer.innerHTML = "<h1>Challenge Quiz</h1>"; // Reset with header
+                        initializeQuiz();
+                }
+
+                initializeQuiz();
+        </script>
+</body>
+
+</html>
