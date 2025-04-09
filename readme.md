@@ -49,7 +49,7 @@ Collapse
 Wrap
 
 Copy
-git clone https://github.com/devononymous/challenge-quiz.git
+git clone https://github.com/devononymous/ChallengeQuiz.git
 cd challenge-quiz
 Open the Project:
 Simply open index.html in a web browser (e.g., Chrome, Firefox).
